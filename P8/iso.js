@@ -129,35 +129,31 @@ class Skeleton extends Phaser.GameObjects.Image {
         );
     }
 
+    can_keep_going(x0, y0, x1, y1, x2, y2) {
+        let distance =
+            Math.abs((x2 - x1) * (y1 - y0) - (x1 - x0) * (y2 - y1)) /
+            Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+
+        if (distance - 2 < 0) return false;
+        else return true;
+    }
+
     update() {
         if (this.motion === 'walk') {
-            data = scene.cache.json.get('map');
-            this.x += this.direction.x * this.speed;
+            let x0 = this.x + this.direction.x * this.speed;
+            let y0 = this.y + this.direction.y * this.speed;
 
             console.log(this.x, this.y);
-            if (this.x < 0) this.x = 0;
-            // if (this.x > data.layers[0].width) this.x = data.layers[0].width;
-            // if (this.y < 0) this.y = 0;
-            // if (this.y > data.layers[0].height) this.y = data.layers[0].height;
+            if (!this.can_keep_going(x0, y0, 0, 378, 804, 776)) return;
+            if (!this.can_keep_going(x0, y0, 776, 0, 0, 378)) return;
+            if (!this.can_keep_going(x0, y0, 776, 0, 1582, 378)) return;
+            if (!this.can_keep_going(x0, y0, 786, 764, 1582, 378)) return;
+
+            this.x += this.direction.x * this.speed;
+
             if (this.direction.y !== 0) {
                 this.y += this.direction.y * this.speed;
                 this.depth = this.y + 64;
-            }
-
-            //  Walked far enough?
-            if (
-                Phaser.Math.Distance.Between(
-                    this.startX,
-                    this.startY,
-                    this.x,
-                    this.y
-                ) >= this.distance
-            ) {
-                this.direction = directions[this.direction.opposite];
-                this.f = this.anim.startFrame;
-                this.frame = this.texture.get(this.direction.offset + this.f);
-                this.startX = this.x;
-                this.startY = this.y;
             }
         }
     }
@@ -204,6 +200,8 @@ class Example extends Phaser.Scene {
             agente.changeState('walk', 'north');
         } else if (cursors.down.isDown) {
             agente.changeState('walk', 'south');
+        } else if (cursors.space.isDown) {
+            agente.changeState('idle', 'south');
         }
 
         agente.update();
