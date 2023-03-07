@@ -66730,7 +66730,7 @@
         }
         create() {
           (T = { x: window.innerWidth / 2, y: window.innerHeight / 2 }),
-            (u = e().Math.Clamp(window.innerWidth / 1600, 0.5, 1)),
+            (u = e().Math.Clamp(window.innerWidth / 1600, 0.7, 1)),
             (f = this.textures.get(o).source[0].width * u),
             this.createAllCards(),
             (v = this.add.image(0, T.y, h).setScale(u)),
