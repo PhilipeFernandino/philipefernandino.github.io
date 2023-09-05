@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Domino-v2</title>
+  </head>
+  <body style="text-align: center; padding: 0; border: 0; margin: 0">
+    <canvas
+      id="unity-canvas"
+      width="1920"
+      height="1080"
+      style="width: 100%; height: 100%; background: #231f20"
+    ></canvas>
+    <script src="Build/Batidinha.loader.js"></script>
+    <script>
+      var meta = document.createElement("meta");
+      meta.name = "viewport";
+      meta.content =
+        "width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes";
+      document.getElementsByTagName("head")[0].appendChild(meta);
+
+      var canvas = document.querySelector("#unity-canvas");
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      canvas.style.position = "fixed";
+
+      document.body.style.textAlign = "left";
+
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/Batidinha.data",
+        frameworkUrl: "Build/Batidinha.framework.js",
+        codeUrl: "Build/Batidinha.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "X1 Jogos",
+        productName: "Domino-v2",
+        productVersion: "0.9.1",
+      });
+    </script>
+  </body>
+</html>
